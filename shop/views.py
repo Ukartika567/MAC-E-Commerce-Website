@@ -14,20 +14,6 @@ MERCHANT_KEY = 'q9OdlbtuSNvWC3cL'
 
 
 def index(request):
-    # return HttpResponse('Index shop')
-
-    # ise category wise product ko show krne ke liye comment kiye h or ise niche line 27 ke loop me paste kiye h
-    # products=Product.objects.all()
-    # print(products)
-    # n=len(products)
-    # nSlide=n//4 + ceil((n/4) - (n//4))
-
-    # we send list of list of products slides/list on homepage so follow the steps below:- this lit is without category
-    # params={ 'no_of_slides':nSlide , 'range': range(1,nSlide), 'product': products}
-    # allProds=[ [products, range(1 , nSlide), nSlide],
-    #          [products, range(1, nSlide), nSlide] ]
-
-    # list with category
     allProds=[]
     catprods=Product.objects.values('category', 'id')
     cats={item['category'] for item in catprods}
