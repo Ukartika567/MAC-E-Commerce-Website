@@ -14,6 +14,20 @@ MERCHANT_KEY = 'q9OdlbtuSNvWC3cL'
 
 
 def index(request):
+    # return HttpResponse('Index shop')
+
+    # ise category wise product ko show krne ke liye comment kiye h or ise niche line 27 ke loop me paste kiye h
+    # products=Product.objects.all()
+    # print(products)
+    # n=len(products)
+    # nSlide=n//4 + ceil((n/4) - (n//4))
+
+    # we send list of list of products slides/list on homepage so follow the steps below:- this lit is without category
+    # params={ 'no_of_slides':nSlide , 'range': range(1,nSlide), 'product': products}
+    # allProds=[ [products, range(1 , nSlide), nSlide],
+    #          [products, range(1, nSlide), nSlide] ]
+
+    # list with category
     allProds=[]
     catprods=Product.objects.values('category', 'id')
     cats={item['category'] for item in catprods}
@@ -146,17 +160,15 @@ def handlerequest(request):
         if i == 'CHECKSUMHASH':
             checksum=form[i]
     verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
-    
     if verify:
         thank=False
         id=response_dict['ORDERID']
         if response_dict['RESPCODE'] == '01':
             print('order successful')
-            thank=True 
+            thank=True
             id=response_dict['ORDERID']
             
         else:
-            thank=False
             print('order was not successful because'+ response_dict['RESPMSG'])
          
     return render(request, 'shop/paymentstatus.html', {'response':response_dict, 'thank':thank, 'id':id})
